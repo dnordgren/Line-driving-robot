@@ -51,20 +51,21 @@ void loop () {
 
 void run() {
 	// par down speed
-	float speedScalar = 0.05;
+	float speedScalar = 0.15;
 	// define servo rotation speed
 	float speed = 90 * speedScalar;
 	// set starting speed
 	// adjust for slow left servo
-	float leftSpeed = 90+speed;//+(0.5*(1/speedScalar));
+	float leftSpeed = 90+speed+(0.6*(1/speedScalar));
 	float rightSpeed = 90-speed;
 	
 	// define max speed based on input speed
-	// float leftMaxSpeed = leftSpeed*1.2;
-// 	if (leftMaxSpeed > 180) {
-// 		leftMaxSpeed = 180;
-// 	}
-// 	float rightMaxSpeed = rightSpeed*0.8;
+	// TODO calibrate servo starting speed and max speed with var
+	float leftMaxSpeed = leftSpeed*1.09;
+	if (leftMaxSpeed > 180) {
+		leftMaxSpeed = 180;
+	}
+	float rightMaxSpeed = rightSpeed*0.9;
 	
 	while (true) {
 		// stop 
@@ -77,26 +78,29 @@ void run() {
 	
 		// TODO : will need to account for changing values as sensor gets closer to edge of line; turn delay will need to be less
 		// left is near black
-		if (readLeftSensor() > 875) {
+		if (readLeftSensor() > 930) {
 			// slow left; speed right
-			leftSpeed = leftSpeed * 0.8;
+			leftSpeed = leftSpeed * 0.995;
 			rightSpeed = rightSpeed * 0.8;
 		}
 		// right is near black
-		else if (readRightSensor() > 805) {
+		if (readRightSensor() > 870) {
 			// slow right; speed left
-			rightSpeed = rightSpeed * 1.2;
+			rightSpeed = rightSpeed * 1.005;
 			leftSpeed = leftSpeed * 1.2;
-		}// else {
+		} // else {
 // 			// on the correct course; speed up
 // 			rightSpeed = rightSpeed * 0.8;	
 // 			leftSpeed = rightSpeed * 1.2;
 // 		}
-		if (leftSpeed > 180) {
-			leftSpeed = 180;
+		if (leftSpeed > leftMaxSpeed) {
+			leftSpeed = leftMaxSpeed;
 		}
 		if (leftSpeed < 90) {
 			leftSpeed = 90;
+		}
+		if (rightSpeed < rightMaxSpeed) {
+			rightSpeed = rightMaxSpeed;
 		}
 		if (rightSpeed > 90) {
 			rightSpeed = 90;
