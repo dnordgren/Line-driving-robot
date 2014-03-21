@@ -62,11 +62,11 @@ void run() {
 	float rightSpeed = rightStartSpeed;
 	
 	// define max speed based on input speed
-	float leftMaxSpeed = leftSpeed*1.1;
+	float leftMaxSpeed = leftSpeed*1.25;
 	if (leftMaxSpeed > 180) {
 		leftMaxSpeed = 180;
 	}
-	float rightMaxSpeed = rightSpeed*0.9;
+	float rightMaxSpeed = rightSpeed*0.75;
 	
 	while (true) {
 		// stop 
