@@ -51,7 +51,7 @@ void loop () {
 
 void run() {
 	// par down speed
-	float speedScalar = 0.15;
+	float speedScalar = 0.25;
 	// define servo rotation speed
 	float speed = 90 * speedScalar;
 	// set starting speed
@@ -68,41 +68,28 @@ void run() {
 	}
 	float rightMaxSpeed = rightSpeed*0.9;
 	
-	int rightReading, leftReading;
-	
 	while (true) {
 		// stop 
 		if (buttonPressed()) {
 			stop();
 			break;
 		}
-		rightReading = readRightSensor();
-		leftReading = readLeftSensor();
 		
 		// left is near black
-		if (rightReading > 870 || leftReading > 930) {
-			if (leftReading > 930 && rightReading <= 870) {
-				// slow left; speed right
-				leftSpeed = leftSpeed * 0.995;
-				rightSpeed = rightSpeed * 0.995;
-			}
-			// right is near black
-			if (rightReading > 870 && leftReading <= 930) {
-				// slow right; speed left
-				rightSpeed = rightSpeed * 1.005;
-				leftSpeed = leftSpeed * 1.005;
-			} 
-			if (rightReading > 870 && leftReading > 930) {
-				rightSpeed = rightSpeed * 0.995;	
-				leftSpeed = leftSpeed * 1.005;
-			}
+		if (readLeftSensor() > 900) {
+			// slow left; speed right
+			leftSpeed = leftSpeed * 0.995;
+			rightSpeed = rightSpeed * 0.8;
 		}
-		else if (rightReading <= 870 && leftReading <= 930)
-		// else if (readLeftSensor() <= 930 && readRightSensor() <= 870) 
-		{
-			// on the correct course; speed up
-			rightSpeed = rightSpeed * 0.995;	
-			leftSpeed = leftSpeed * 1.005;
+		// right is near black
+		if (readRightSensor() > 840) {
+			// slow right; speed left
+			rightSpeed = rightSpeed * 1.005;
+			leftSpeed = leftSpeed * 1.2;
+		} // else {
+		if (readRightSensor() < 870 && readLeftSensor() < 930) {
+			rightSpeed = rightSpeed * 0.997;	
+			leftSpeed = rightSpeed * 1.003;
 		}
 		
 		if (leftSpeed > leftMaxSpeed) {
