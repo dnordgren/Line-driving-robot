@@ -73,37 +73,32 @@ void run() {
 			stop();
 			break;
 		}
-		
-		// TODO : friction coefficient
-	
-		// TODO : will need to account for changing values as sensor gets closer to edge of line; turn delay will need to be less
-		// left is near black
 		if (readLeftSensor() > 930) {
 			// slow left; speed right
 			leftSpeed = leftSpeed * 0.995;
-			rightSpeed = rightSpeed * 0.8;
+			rightSpeed = rightSpeed * 0.995;
 		}
 		// right is near black
 		if (readRightSensor() > 870) {
 			// slow right; speed left
 			rightSpeed = rightSpeed * 1.005;
-			leftSpeed = leftSpeed * 1.2;
+			leftSpeed = leftSpeed * 1.005;
 		} // else {
 // 			// on the correct course; speed up
 // 			rightSpeed = rightSpeed * 0.8;	
-// 			leftSpeed = rightSpeed * 1.2;
-// 		}
+// 			leftSpeed = leftSpeed * 1.2;
+//  		}
 		if (leftSpeed > leftMaxSpeed) {
 			leftSpeed = leftMaxSpeed;
 		}
 		if (leftSpeed < 90) {
-			leftSpeed = 90;
+			leftSpeed = 95;
 		}
 		if (rightSpeed < rightMaxSpeed) {
 			rightSpeed = rightMaxSpeed;
 		}
 		if (rightSpeed > 90) {
-			rightSpeed = 90;
+			rightSpeed = 85;
 		}
 		rightServo.write(rightSpeed);
 		leftServo.write(leftSpeed);
