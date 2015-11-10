@@ -16,10 +16,9 @@
 #define SENSOR_RIGHT A1
 
 Servo leftServo, rightServo;
-// TODO : make these local to setup()
 
 void setup () {
-	Serial.begin(9600);
+    Serial.begin(9600);
 	
 	pinMode(BUTTON, INPUT_PULLUP);
 	
@@ -46,7 +45,6 @@ void setup () {
 }
 
 void loop () {
-	// printSensors();
 }
 
 void run() {
@@ -54,13 +52,11 @@ void run() {
 	float speedScalar = 0.15;
 	// define servo rotation speed
 	float speed = 90 * speedScalar;
-	// set starting speed
 	// adjust for slow left servo
 	float leftSpeed = 90+speed+(0.6*(1/speedScalar));
 	float rightSpeed = 90-speed;
 	
 	// define max speed based on input speed
-	// TODO calibrate servo starting speed and max speed with var
 	float leftMaxSpeed = leftSpeed*1.09;
 	if (leftMaxSpeed > 180) {
 		leftMaxSpeed = 180;
@@ -83,11 +79,7 @@ void run() {
 			// slow right; speed left
 			rightSpeed = rightSpeed * 1.005;
 			leftSpeed = leftSpeed * 1.005;
-		} // else {
-// 			// on the correct course; speed up
-// 			rightSpeed = rightSpeed * 0.8;	
-// 			leftSpeed = leftSpeed * 1.2;
-//  		}
+		}
 		if (leftSpeed > leftMaxSpeed) {
 			leftSpeed = leftMaxSpeed;
 		}
@@ -103,8 +95,6 @@ void run() {
 		rightServo.write(rightSpeed);
 		leftServo.write(leftSpeed);
 	}
-	
-	// TODO : if both sensors are on black, switch modes
 }
 
 void stop() {
@@ -161,6 +151,5 @@ void printSensors() {
     Serial.println(sensorLeft);
     Serial.print("Right sensor: ");
     Serial.println(sensorRight);
-
     delay(1500);
 }
